@@ -1,0 +1,7 @@
+<module>
+	<inherits name="com.googlecode.gwt.math.Math"/> 
+	<inherits name="com.google.gwt.user.User"/>
+	<inherits name='com.allen_sauer.gwt.dnd.gwt-dnd'/>
+	
+	<entry-point class="com.gwtsite.dnd.client.ShoppingCartDemo"/>
+</module>
