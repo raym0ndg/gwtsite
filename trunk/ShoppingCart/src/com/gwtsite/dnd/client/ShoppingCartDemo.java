@@ -25,13 +25,7 @@ public class ShoppingCartDemo implements EntryPoint {
 
 		AbsolutePanel containingPanel = new AbsolutePanel();
 		containingPanel.setPixelSize(650, 600);
-		containingPanel.addStyleName("bookContainer");
 		PickupDragController dragController = new PickupDragController(containingPanel, false) {
-
-			public void dragEnd() {
-				super.dragEnd();
-//				this.restoreSelectedWidgetsLocation();
-			}
 			
 			protected Widget newDragProxy(DragContext context) {
 			    AbsolutePanel container = new AbsolutePanel();
