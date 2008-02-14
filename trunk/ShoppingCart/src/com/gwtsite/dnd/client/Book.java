@@ -2,7 +2,6 @@ package com.gwtsite.dnd.client;
 
 import java.math.BigDecimal;
 
-import com.allen_sauer.gwt.dnd.client.PickupDragController;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Image;
@@ -16,16 +15,16 @@ public class Book extends Composite implements SourcesMouseEvents{
 	private String title;
 	private String imgUrl;
 	private BigDecimal price;
-	
-	private VerticalPanel mainPanel = new VerticalPanel();
 	private Image bookImage;
+	private VerticalPanel mainPanel;
+	
 	
 	public Book(String title, BigDecimal price, String imgUrl)
 	{
 		this.title = title;
 		this.price = price;
 		this.imgUrl = imgUrl;
-		
+		this.mainPanel = new VerticalPanel();
 		initWidget(mainPanel);
 		
 		bookImage = new Image(imgUrl);
@@ -49,16 +48,16 @@ public class Book extends Composite implements SourcesMouseEvents{
 		return this.title;
 	}
 
+	public Image getImage() {
+		return this.bookImage;
+	}
+	
 	public String getImageUrl() {
 		return this.imgUrl;
 	}
 
 	public BigDecimal getPrice() {
 		return price;
-	}
-
-	public void makeDraggable(PickupDragController dragController) {
-		dragController.makeDraggable(this, bookImage);
 	}
 
 	public int hashCode() {
