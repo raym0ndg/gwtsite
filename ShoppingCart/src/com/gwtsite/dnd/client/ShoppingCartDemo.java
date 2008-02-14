@@ -12,7 +12,6 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -26,23 +25,16 @@ public class ShoppingCartDemo implements EntryPoint {
 		AbsolutePanel containingPanel = new AbsolutePanel();
 		containingPanel.setPixelSize(650, 600);
 		PickupDragController dragController = new PickupDragController(containingPanel, false) {
-			
 			protected Widget newDragProxy(DragContext context) {
 			    AbsolutePanel container = new AbsolutePanel();
 			    DOM.setStyleAttribute(container.getElement(), "overflow", "visible");
-
 			    for (Iterator iterator = context.selectedWidgets.iterator(); iterator.hasNext();) {
 			      Widget widget = (Widget) iterator.next();
 			      Book book = (Book)widget;
-			      Widget proxy = new SimplePanel();
-			      proxy.setPixelSize(widget.getOffsetWidth(), widget.getOffsetHeight());
-			      proxy.addStyleName("dragdrop-proxy");
 			      container.add(new Image(book.getImageUrl()));
 			    }
-
 			    return container;
 			}
-			
 		};
 		dragController.setBehaviorDragProxy(true);
 		ShoppingCart cart = new ShoppingCart();
