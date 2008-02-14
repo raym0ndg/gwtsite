@@ -17,9 +17,7 @@ package com.gwtsite.dnd.client;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
@@ -30,7 +28,6 @@ public class ShoppingCart extends Composite{
 
 	private VerticalPanel mainPanel;
 	private Label totalLabel;
-	private Map booksQtyMap = new HashMap();
 	private List cartItems = new ArrayList();
 	private VerticalPanel cartContents;
 	
