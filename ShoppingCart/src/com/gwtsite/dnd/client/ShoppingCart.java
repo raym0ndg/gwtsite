@@ -54,18 +54,6 @@ public class ShoppingCart extends Composite{
 			item = (CartItem) cartItems.get(index);
 		}
 		item.incrementQuantity();
-//		Integer qty = (Integer)booksQtyMap.get(book);
-//		if (qty == null)
-//		{
-//			qty = new Integer(1);
-//			booksQtyMap.put(book, qty);
-//		}
-//		else
-//		{
-//			qty = new Integer(qty.intValue() + 1);
-//			booksQtyMap.put(book, qty);
-//		}
-//		cartContents.add(new Label(qty + " " + book.getBookTitle()));
 		updateTotalLabel();
 		
 	}
