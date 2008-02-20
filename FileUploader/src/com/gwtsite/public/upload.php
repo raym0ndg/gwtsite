@@ -1,7 +1,7 @@
 // This code was taken from the online php manual at:
 // http://us3.php.net/features.file-upload
 <?php 
-$uploaddir = './upload';
+$uploaddir = './';
 $uploadfile = $uploaddir . basename($_FILES['uploadFormElement']['name']);
 echo '<pre>';
 if (move_uploaded_file($_FILES['uploadFormElement']['tmp_name'], $uploadfile)) {
