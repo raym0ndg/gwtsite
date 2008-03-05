@@ -1,0 +1,9 @@
+<module>
+	<inherits name="com.google.gwt.user.User"/>
+	<inherits name='com.gwtext.GwtExt' />
+	<inherits name='com.allen_sauer.gwt.voices.gwt-voices'/>
+	<entry-point class="com.gwtsite.musicplayer.client.MusicPlayer"/>
+	<stylesheet src="js/ext/resources/css/ext-all.css" />
+	<script src="js/ext/adapter/ext/ext-base.js" />
+	<script src="js/ext/ext-all.js" />
+</module>
