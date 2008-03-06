@@ -1,10 +1,19 @@
 {
 	"data":
   	[
-    	{"title":"Sky Mall", "album" : "Thing a Week Four", "lyrics" : "lalala"},
-      {"title":"Creepy Doll", "album" : "Thing a Week Four", "lyrics" : "lalaldsfdsfa"},
-      {"title":"Big Bad World One", "album" : "Thing a Week Four", "lyrics" : "jhkjh"},
-      {"title":"Mr. Fancy Pants", "album" : "Thing a Week Four", "lyrics" : "jhkjh"},
-      {"title":"I'm Your Moon", "album" : "Thing a Week Four", "lyrics" : "jhkjh"},
+    	{"title":"Sky Mall", "album" : "Thing a Week Four"},
+      {"title":"Creepy Doll", "album" : "Thing a Week Four"},
+      {"title":"Big Bad World One", "album" : "Thing a Week Four"},
+      {"title":"Mr. Fancy Pants", "album" : "Thing a Week Four"},
+      {"title":"I'm Your Moon", "album" : "Thing a Week Four"},
+      {"title":"When You Go", "album" : "Thing a Week Three"},
+      {"title":"The Presidents", "album" : "Thing a Week Three"},
+      {"title":"Tom Cruise Crazy", "album" : "Thing a Week Three"},
+      {"title":"Soft Rocked By Me", "album" : "Thing a Week Three"},
+      {"title":"Drinking with You", "album" : "Thing a Week Three"},
+      {"title":"Flickr", "album" : "Thing a Week Two"},
+      {"title":"Curl", "album" : "Thing a Week Two"},
+      {"title":"W's Duty", "album" : "Thing a Week One"},
+      {"title":"Shop Vac", "album" : "Thing a Week One"},
     ]
 }

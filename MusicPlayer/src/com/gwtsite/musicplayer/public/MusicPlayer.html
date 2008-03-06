@@ -15,7 +15,7 @@
 		<!--                                           -->
 		<!-- Link CSS file                             -->
 		<!--                                           -->
-		<link type="text/css" rel='stylesheet' href='MusicPlayer.css'/>
+		<link type="text/css" rel='stylesheet' href='MusicPlayer.css'/> 
 
 		
 	</head>
@@ -27,15 +27,20 @@
 	<!--                                           -->
 	<body>
 
-		<!--                                            -->
-		<!-- This script is required bootstrap stuff.   -->
-		<!-- You can put it in the HEAD, but startup    -->
-		<!-- is slightly faster if you include it here. -->
-		<!--                                            -->
+		<?php 
+		define('WP_USE_THEMES', false);
+		require('../../../../wp-blog-header.php');
+		get_header();
+		?>
+		<div id="container">
+			<div id="content">
+		                     
 		<script language="javascript" src="com.gwtsite.musicplayer.MusicPlayer.nocache.js"></script>
 
-		<!-- OPTIONAL: include this if you want history support -->
-		<iframe id="__gwt_historyFrame" style="width:0;height:0;border:0"></iframe>
+	</div>
+		</div>
+		<?php get_sidebar(); ?>
 
+		<?php get_footer(); ?>
 	</body>
 </html>
