@@ -63,10 +63,13 @@ public class MusicPlayer implements EntryPoint {
 		mainPanel.addStyleName("mainPanel");
 		
 		HorizontalPanel topArea = new HorizontalPanel();
+		topArea.addStyleName("topArea");
 		topArea.add(grid);
 		topArea.add(lyricsArea);
 		
 		nowPlaying = new Label();
+		nowPlaying.addStyleName("nowPlaying");
+		nowPlaying.setText("Double-click on a song to play");
 		nowPlaying.setWidth("320px");
 		
 		stopSongBtn = new Button();
@@ -85,7 +88,7 @@ public class MusicPlayer implements EntryPoint {
 	private void buildLyricsArea() {
 		lyricsArea = new Panel();
 		lyricsArea.setWidth("300px");
-		lyricsArea.setHeight("350px");
+		lyricsArea.setHeight("325px");
 		lyricsArea.setTitle("Lyrics");
 		lyricsArea.setCollapsible(true);
 		lyricsArea.setVisible(false);
