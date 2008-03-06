@@ -11,6 +11,8 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -52,12 +54,14 @@ public class MusicPlayer implements EntryPoint {
 	private Sound currentSong;
 	private SoundController soundController = new SoundController();
 	private Panel lyricsArea;
-	private Label nowPlaying;
+	private HTML nowPlaying;
 
 	public void onModuleLoad() {
 	 
 		buildSongGrid();  
 		buildLyricsArea();
+		
+		RootPanel.setVisible(DOM.getElementById("loading-indicator"), false);
 		
 		VerticalPanel mainPanel = new VerticalPanel();
 		mainPanel.addStyleName("mainPanel");
@@ -67,7 +71,7 @@ public class MusicPlayer implements EntryPoint {
 		topArea.add(grid);
 		topArea.add(lyricsArea);
 		
-		nowPlaying = new Label();
+		nowPlaying = new HTML();
 		nowPlaying.addStyleName("nowPlaying");
 		nowPlaying.setText("Double-click on a song to play");
 		nowPlaying.setWidth("320px");
@@ -83,6 +87,7 @@ public class MusicPlayer implements EntryPoint {
 		
 		RootPanel.get("content").add(mainPanel);
 		addListeners();
+		
 	}
 
 	private void buildLyricsArea() {
@@ -165,25 +170,30 @@ public class MusicPlayer implements EntryPoint {
 			}
 
 			public void onRowDblClick(GridPanel grid, int rowIndex, EventObject e) {
-				if (currentSong != null)
+				if (currentSong != null) {
 					currentSong.stop();
+				}
 				
 				Record record = grid.getStore().getAt(rowIndex);
-				String title = record.getAsString("title");
+				final String title = record.getAsString("title");
 				String mp3Name = title + ".mp3";
-				nowPlaying.setText("Now Playing - "+title);
+				
 				currentSong = soundController.createSound(Sound.MIME_TYPE_AUDIO_MPEG,
 						mp3Name);
 
-				currentSong.play();
+				
 				currentSong.addEventHandler(new SoundHandler() {
 					public void onSoundComplete(SoundCompleteEvent event) {
 						songPlaying(false);
 					}
 
-					public void onSoundLoadStateChange(SoundLoadStateChangeEvent event) { }
+					public void onSoundLoadStateChange(SoundLoadStateChangeEvent event) { 
+						nowPlaying.setText("Now Playing - "+ title);
+					}
 					
 				});
+				currentSong.play();
+				nowPlaying.setHTML("<img class=\"loading-img\" src=\"1-0.gif\"/>Loading song - "+ title);
 				songPlaying(true);
 			}
 			

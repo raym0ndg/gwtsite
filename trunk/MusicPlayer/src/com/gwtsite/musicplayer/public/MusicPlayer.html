@@ -4,7 +4,7 @@
 		<!--                                           -->
 		<!-- Any title is fine                         -->
 		<!--                                           -->
-		<title>GWT Site - MusicPlayer Demo</title>
+		<title>GWT MusicPlayer Demo | GWT Site - </title>
 
 		<!--                                           -->
 		<!-- The module reference below is the link    -->
@@ -29,11 +29,40 @@
 
 		<?php 
 		define('WP_USE_THEMES', false);
-		require('../../../../wp-blog-header.php');
+		require('../../wp-blog-header.php');
 		get_header();
-		?>
+		?>	    
+
+		<div id="loading-indicator">
+		        <img class="loading-img" src="1-0.gif"/>GWT Music Player<br/>
+		        <span id="loading-msg">Loading...</span>
+		</div>
+		
 		<div id="container">
 			<div id="content">
+			<div id="top_content">
+	<div class="popular_posts">
+	<h4>Most Popular Posts</h4>
+	<ul>
+		<?php akpc_most_popular($limit = 5); ?>
+	</ul>
+	</div>
+	
+	<div id="subscription">
+	<h4>Subscription Options</h4>
+
+	
+	<form action="http://www.feedburner.com/fb/a/emailverify" method="post" target="popupwindow" onsubmit="window.open('http://www.feedburner.com/fb/a/emailverifySubmit?feedId=413256', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+		<a href="http://feeds.feedburner.com/GwtSite"><img border="0" src="<?php bloginfo('stylesheet_directory'); ?>/images/feed-icon-28x28.png" alt="" /></a>
+		<input type="text" value="Enter email address" style="width:140px" name="email"/><input type="hidden" value="http://feeds.feedburner.com/~e?ffid=413256" name="url"/><input type="hidden" value="GWT Site" name="title"/><input type="hidden" name="loc" value="en_US"/><input id="subscribe_btn" type="submit" value="Subscribe" /></form>
+	
+	<div id="buttons">
+	<a href="http://feeds.feedburner.com/GwtSite"><img src="http://feeds.feedburner.com/~fc/GwtSite?bg=FB9C39&amp;fg=000000&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>
+	
+	<a href="http://technorati.com/faves?sub=addfavbtn&amp;add=http://www.gwtsite.com"><img border="0" src="http://static.technorati.com/pix/fave/btn-fave2.png" alt="Add to Technorati Favorites" /></a>
+	</div>
+	</div>
+	</div>
 			<h3>GWT MusicPlayer Demo</h3>
 		    <p>This is a simple demo demonstrating the use of some <a href="http://code.google.com/p/gwt-ext/">GWT-Ext</a> widgets.  It also uses
 		    the <a href="http://code.google.com/p/gwt-voices/">gwt-voices</a> library to to play mp3s.</p>

@@ -25,3 +25,19 @@ body {
 .stopSongBtn {
 	margin-top: 10px;
 }
+
+#loading-indicator {
+  position: absolute;
+  left: 45%;
+  top: 55%;
+  margin-left: -45px;
+  padding: 5px;
+  z-index: 20001;
+  height: auto;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+
+.loading-img {
+	padding-right: 5px;
+}
