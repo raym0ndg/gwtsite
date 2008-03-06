@@ -2,6 +2,9 @@ package com.gwtsite.musicplayer.client;
 
 import com.allen_sauer.gwt.voices.client.Sound;
 import com.allen_sauer.gwt.voices.client.SoundController;
+import com.allen_sauer.gwt.voices.client.handler.SoundCompleteEvent;
+import com.allen_sauer.gwt.voices.client.handler.SoundHandler;
+import com.allen_sauer.gwt.voices.client.handler.SoundLoadStateChangeEvent;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -170,8 +173,15 @@ public class MusicPlayer implements EntryPoint {
 						mp3Name);
 
 				currentSong.play();
-				stopSongBtn.setVisible(true);
-				nowPlaying.setVisible(true);
+				currentSong.addEventHandler(new SoundHandler() {
+					public void onSoundComplete(SoundCompleteEvent event) {
+						songPlaying(false);
+					}
+
+					public void onSoundLoadStateChange(SoundLoadStateChangeEvent event) { }
+					
+				});
+				songPlaying(true);
 			}
 			
 		});
@@ -179,10 +189,15 @@ public class MusicPlayer implements EntryPoint {
 		stopSongBtn.addListener(new ButtonListenerAdapter() {
 			public void onClick(Button button, EventObject e) {
 				currentSong.stop();
-				stopSongBtn.setVisible(false);
-				nowPlaying.setVisible(false);
+				songPlaying(false);
 			}
 		});
 		
+	}
+	
+	private void songPlaying(boolean playing)
+	{
+		stopSongBtn.setVisible(playing);
+		nowPlaying.setVisible(playing);
 	}
 }
