@@ -12,10 +12,14 @@ body {
 	margin-left: 20px;
 }
 
-.lyrics p
+.lyrics p, .nowPlaying
 {
 	font-size: 95%;
 	margin-top: 5px;
+}
+
+.topArea {
+	margin-bottom: 10px;
 }
 
 .stopSongBtn {
