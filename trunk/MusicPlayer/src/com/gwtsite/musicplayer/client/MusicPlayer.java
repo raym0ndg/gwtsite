@@ -8,8 +8,8 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.gwtext.client.core.EventObject;
@@ -21,63 +21,88 @@ import com.gwtext.client.data.RecordDef;
 import com.gwtext.client.data.Store;
 import com.gwtext.client.data.StringFieldDef;
 import com.gwtext.client.widgets.Button;
+import com.gwtext.client.widgets.Panel;
 import com.gwtext.client.widgets.event.ButtonListenerAdapter;
 import com.gwtext.client.widgets.grid.ColumnConfig;
 import com.gwtext.client.widgets.grid.ColumnModel;
 import com.gwtext.client.widgets.grid.GridPanel;
 import com.gwtext.client.widgets.grid.event.GridRowListenerAdapter;
 
-/**
- * Entry point classes define <code>onModuleLoad()</code>.
+/*
+ * Copyright 2008 Chris Fong
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 public class MusicPlayer implements EntryPoint {
 	private GridPanel grid;
-	private Button playSongBtn;
-	private Button pauseSongBtn;
+	private Button stopSongBtn;
 	private Sound currentSong;
 	private SoundController soundController = new SoundController();
-	private HTML lyricsArea;
+	private Panel lyricsArea;
+	private Label nowPlaying;
 
 	public void onModuleLoad() {
 	 
-		buildSongTable();  
+		buildSongGrid();  
+		buildLyricsArea();
 		
-		HorizontalPanel mainPanel = new HorizontalPanel();
-		mainPanel.add(grid);
+		VerticalPanel mainPanel = new VerticalPanel();
+		mainPanel.addStyleName("mainPanel");
 		
-		VerticalPanel rightPanel = new VerticalPanel();
-		pauseSongBtn = new Button();
-		pauseSongBtn.setText("Pause song");
-		rightPanel.add(pauseSongBtn);
+		HorizontalPanel topArea = new HorizontalPanel();
+		topArea.add(grid);
+		topArea.add(lyricsArea);
 		
-		lyricsArea = new HTML();
-		rightPanel.add(lyricsArea);
+		nowPlaying = new Label();
+		nowPlaying.setWidth("320px");
 		
-		mainPanel.add(rightPanel);
-
-		RootPanel.get().add(mainPanel); 
+		stopSongBtn = new Button();
+		stopSongBtn.setText("Stop song");
+		stopSongBtn.setVisible(false);
+		stopSongBtn.addStyleName("stopSongBtn");
+		
+		mainPanel.add(topArea);
+		mainPanel.add(nowPlaying);
+		mainPanel.add(stopSongBtn);
+		
+		RootPanel.get("content").add(mainPanel);
 		addListeners();
-		
 	}
 
-	private void buildSongTable() {
+	private void buildLyricsArea() {
+		lyricsArea = new Panel();
+		lyricsArea.setWidth("300px");
+		lyricsArea.setHeight("350px");
+		lyricsArea.setTitle("Lyrics");
+		lyricsArea.setCollapsible(true);
+		lyricsArea.setVisible(false);
+		lyricsArea.setAutoScroll(true);
+		lyricsArea.addStyleName("lyrics");
+	}
+
+	private void buildSongGrid() {
+		
 		RecordDef recordDef = new RecordDef(
 			new FieldDef[] {
 				new StringFieldDef("title"),
-				new StringFieldDef("album"),
-				new StringFieldDef("lyrics")
+				new StringFieldDef("album")
 			}
 		);
 		
-		Object[][] data = getSongData();  
 		HttpProxy dataProxy = new HttpProxy("songs.json");
-//		MemoryProxy proxy = new MemoryProxy(data);  
-//		ArrayReader reader = new ArrayReader(recordDef); 	
-		
 		JsonReader reader = new JsonReader(recordDef);  
 		reader.setRoot("data");  
 		
-//		Store store = new Store(proxy, reader);  
 		Store store = new Store(dataProxy, reader); 
 		store.load();  
 		
@@ -86,7 +111,7 @@ public class MusicPlayer implements EntryPoint {
 		
 		ColumnConfig[] columns = new ColumnConfig[]{  
 				new ColumnConfig("Song Title", "title", 160, true, null, "title"),  
-				new ColumnConfig("Album", "album", 100)
+				new ColumnConfig("Album", "album", 160)
 		};  
 		
 		ColumnModel columnModel = new ColumnModel(columns);
@@ -95,18 +120,20 @@ public class MusicPlayer implements EntryPoint {
 		grid.setFrame(true);  
 		grid.setStripeRows(true);  
 		grid.setAutoExpandColumn("title");  
-		grid.setHeight(350);  
-		grid.setWidth(350);  
+		grid.setWidth(320);  
+		grid.setHeight(350);
 		grid.setTitle("Jonathan Coulton Songs");
+
 	}
 
 	private void addListeners() {
 		grid.addGridRowListener(new GridRowListenerAdapter() {
 
 			public void onRowClick(GridPanel grid, int rowIndex, EventObject e) {
-				
 				Record record = grid.getStore().getAt(rowIndex);
 				String title = record.getAsString("title");
+				lyricsArea.setVisible(true);
+				lyricsArea.setTitle("Lyrics for " + title);
 				displaySongLyrics(title);
 			}
 
@@ -116,12 +143,10 @@ public class MusicPlayer implements EntryPoint {
 					RequestBuilder request = new RequestBuilder(RequestBuilder.GET, title+".txt");
 					request.sendRequest(null, new RequestCallback() {
 						public void onError(Request request, Throwable exception) {
-							System.out.println("doh, error");
-							
+							System.out.println("doh, error: " + exception.getStackTrace());
 						}
 						public void onResponseReceived(Request request, Response response) {
-							System.out.println("yay got: " + response.getText());
-							lyricsArea.setHTML(response.getText());
+							lyricsArea.setHtml(response.getText());
 						}
 						
 					});
@@ -140,29 +165,24 @@ public class MusicPlayer implements EntryPoint {
 				Record record = grid.getStore().getAt(rowIndex);
 				String title = record.getAsString("title");
 				String mp3Name = title + ".mp3";
-				System.out.println("mp3 name: " + mp3Name);
+				nowPlaying.setText("Now Playing - "+title);
 				currentSong = soundController.createSound(Sound.MIME_TYPE_AUDIO_MPEG,
 						mp3Name);
 
 				currentSong.play();
+				stopSongBtn.setVisible(true);
+				nowPlaying.setVisible(true);
 			}
 			
 		});
 		
-		pauseSongBtn.addListener(new ButtonListenerAdapter() {
+		stopSongBtn.addListener(new ButtonListenerAdapter() {
 			public void onClick(Button button, EventObject e) {
 				currentSong.stop();
-	
+				stopSongBtn.setVisible(false);
+				nowPlaying.setVisible(false);
 			}
 		});
 		
-	}
-
-	private Object[][] getSongData() {
-		return new Object[][] { 
-			new Object[] { "song1", "album1", "lyrics1" },
-			new Object[] { "song2", "album2", "lyrics2" },
-			new Object[] { "song3", "album1", "lyrics3" }
-		};
 	}
 }
