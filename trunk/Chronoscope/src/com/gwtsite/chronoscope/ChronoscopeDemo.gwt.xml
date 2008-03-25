@@ -1,0 +1,8 @@
+<module>
+	<inherits name="com.google.gwt.user.User"/>
+	<inherits name="com.google.gwt.json.JSON"/>
+	<inherits name='org.timepedia.chronoscope.Chronoscope'/> 
+	<entry-point class="com.gwtsite.chronoscope.client.ChronoscopeDemo"/>
+	<script src="dataset.js"> </script>  
+	
+</module>
